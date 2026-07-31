@@ -16,8 +16,9 @@ its first dollar."
 money for a product. Secondary: the iteration loop (format kills/launches,
 pricing, channels) runs weekly without human input.
 
-**Budget:** $50 total (domain ~$10, rest reserved for small distribution
-experiments). Hosting and email on free tiers.
+**Budget:** $50 cap, but target $0 spent before first revenue so the first
+sale is already net profit. No domain at launch — free `*.pages.dev`
+subdomain; buy a domain only out of revenue. Hosting and email on free tiers.
 
 ## Product
 
@@ -111,11 +112,13 @@ at it, not at the shop.
 
 ## Anay's one-time setup (~45 min, then nothing)
 
-1. Buy domain (~$10) — Claude proposes names, Anay clicks buy.
-2. Lemon Squeezy account (KYC) + API key to Claude.
-3. Resend account, verify domain, API key to Claude.
-4. Cloudflare Pages connected to the repo.
-5. Approve the mandate file.
+1. Lemon Squeezy account (KYC) + API key to Claude.
+2. Resend account + API key to Claude (send from Resend's shared domain until
+   we own one; buy a domain only after first revenue).
+3. Cloudflare Pages connected to the repo (free `*.pages.dev` subdomain).
+4. Approve the mandate file.
+
+Target setup cost: $0. First sale is therefore net profit.
 
 ## Risks
 
