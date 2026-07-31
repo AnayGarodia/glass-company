@@ -10,6 +10,7 @@ no new orders changes nothing but the dashboard timestamp.
    Create it with that empty shape if missing.
 3. If today is Sunday and no `decision` event exists in the ledger from the
    last 6 days, also execute `RUNBOOK-WEEKLY.md` after finishing this list.
+   Also: if `LAUNCH.md` exists and its conditions are met, execute it.
 4. Update pricing: `ops.solpay.sol_price_usd_cents()` → write to
    `data/products.json` as `sol_price_usd_cents`. If the API fails, keep the
    old value.
