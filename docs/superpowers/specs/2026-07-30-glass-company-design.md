@@ -47,8 +47,9 @@ not templated). A bad artifact triggers regeneration, not delivery.
 
 - **Lemon Squeezy** as merchant of record: handles global sales tax/VAT,
   checkout, receipts. This is what makes zero human involvement true.
-- One product per format, checkout collects email; intake form (Tally or
-  Lemon Squeezy custom fields) collects the personalization facts. If a paid
+- One product per format, checkout collects email; a Tally form (free tier)
+  linked from the post-checkout redirect and receipt collects the
+  personalization facts, keyed by order number. If a paid
   order has no intake data after 24h, email a reminder; refund at 7 days.
 - Payouts go to Anay's bank.
 - **Refund policy: instant, no questions.** Keeps support fully autonomous.
@@ -61,7 +62,7 @@ Same proven pattern as fable-trader: launchd + `claude -p` + a mandate file.
 - **Fulfillment run (every 30 min, waking hours):** poll Lemon Squeezy API for
   new orders → fetch intake data → generate artifact → self-QA → deliver via
   Resend → mark fulfilled → update dashboard data → append journal entry.
-  Also: answer any customer email in the inbox (Resend inbound or IMAP),
+  Also: answer customer email (Resend inbound, polled via API each run) and
   process refund requests.
 - **Weekly deep run:** conversion analysis (visits → checkouts → sales per
   format), kill/launch format decisions, pricing changes, marketing actions,
