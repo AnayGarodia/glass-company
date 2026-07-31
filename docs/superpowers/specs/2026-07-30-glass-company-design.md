@@ -63,8 +63,9 @@ Same proven pattern as fable-trader: launchd + `claude -p` + a mandate file.
 - **Fulfillment run (every 30 min, waking hours):** poll Lemon Squeezy API for
   new orders → fetch intake data → generate artifact → self-QA → deliver via
   Resend → mark fulfilled → update dashboard data → append journal entry.
-  Also: answer customer email (Resend inbound, polled via API each run) and
-  process refund requests.
+  Also: process support/refund requests, which arrive via a Tally support
+  form linked in every customer email (pollable via the same Tally API as
+  intake — no inbound email infra needed).
 - **Weekly deep run:** conversion analysis (visits → checkouts → sales per
   format), kill/launch format decisions, pricing changes, marketing actions,
   published as a "board meeting" journal entry.
