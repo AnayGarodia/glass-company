@@ -1,0 +1,5 @@
+logs/*.log
+logs/launchd.err
+__pycache__/
+*.pyc
+.pytest_cache/

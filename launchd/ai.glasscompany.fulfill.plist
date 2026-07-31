@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0"><dict>
+  <key>Label</key><string>ai.glasscompany.fulfill</string>
+  <key>ProgramArguments</key><array>
+    <string>/Users/aakritigarodia/Desktop/Projects/glass-company/bin/fulfill-run.sh</string>
+  </array>
+  <key>StartInterval</key><integer>1800</integer>
+  <key>StandardErrorPath</key>
+  <string>/Users/aakritigarodia/Desktop/Projects/glass-company/logs/launchd.err</string>
+</dict></plist>
