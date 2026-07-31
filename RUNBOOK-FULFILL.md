@@ -93,8 +93,12 @@ sanity-check they're there:
    `.venv/bin/python3 -c "from ops.dashboard import build_site; build_site('data/ledger.jsonl','journal','site')"`.
 11. If anything notable happened, write `journal/YYYY-MM-DD-<slug>.md` —
     first line `# Title`, then honest plain prose. Public; write for readers.
-12. `git add -A && git commit -m "ops: fulfillment run" && git push`, then
-    deploy the dashboard:
-    `npx wrangler pages deploy site --project-name glasscompany --branch main --commit-dirty=true`
-    (wrangler is OAuth'd on this machine; the site is
-    https://glasscompany.pages.dev).
+
+**Stop here.** Do not run `git add`, `git commit`, `git push`, or
+`npx wrangler`. Those need network egress that this sandboxed session
+doesn't have (confirmed 2026-07-31 — they fail here every time, by
+design). The wrapper script that invoked you (`bin/fulfill-run.sh`) commits,
+pushes, and deploys everything you wrote automatically the moment you
+finish, in a plain unsandboxed shell. Your job ends at "the right files are
+on disk and the journal is written"; syncing them live is not your problem
+to solve.
