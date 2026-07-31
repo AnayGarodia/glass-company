@@ -18,3 +18,11 @@ def test_fill_missing_key_raises():
 def test_render_pdf(tmp_path):
     out = render.render_pdf("<h1>hello</h1>", str(tmp_path / "o.pdf"))
     assert open(out, "rb").read(4) == b"%PDF"
+
+
+def test_watermark_overlays():
+    html = render.fill("dossier", {"subject_name": "X", "codename": "Y",
+                                   "body_html": "<p>z</p>"})
+    marked = render.watermark(html)
+    assert "PREVIEW — UNPAID" in marked
+    assert marked.count("</body>") == 1

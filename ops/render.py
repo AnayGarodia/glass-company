@@ -13,6 +13,18 @@ def fill(template_name: str, context: dict) -> str:
     return Template(tpl).substitute(context)
 
 
+WATERMARK = ('<div style="position:fixed;top:40%;left:0;right:0;text-align:center;'
+             'transform:rotate(-24deg);font-size:64px;color:rgba(160,0,0,0.18);'
+             'font-family:Helvetica,Arial,sans-serif;font-weight:800;'
+             'letter-spacing:6px;z-index:9999;pointer-events:none">'
+             'PREVIEW — UNPAID</div>')
+
+
+def watermark(html: str) -> str:
+    """Overlay the unpaid-preview watermark on a rendered artifact page."""
+    return html.replace("</body>", WATERMARK + "</body>")
+
+
 def render_pdf(html: str, out_pdf: str) -> str:
     with tempfile.NamedTemporaryFile("w", suffix=".html", delete=False) as f:
         f.write(html)

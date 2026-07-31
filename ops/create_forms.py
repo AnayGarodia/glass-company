@@ -12,8 +12,8 @@ import requests
 API = "https://api.tally.so"
 PRODUCTS = Path(__file__).resolve().parent.parent / "data" / "products.json"
 
-PAY_NOTE = ("First: send the SOL amount shown on glasscompany.pages.dev to the "
-            "wallet address there. Then paste your transaction signature below.")
+PREVIEW_NOTE = ("No payment now. I make your artifact first and email you a "
+                "watermarked preview. Pay only if you love it.")
 
 
 def _b(btype, payload, group_type=None):
@@ -40,10 +40,8 @@ def _email():
 
 def _common_head(title):
     return [
-        _b("FORM_TITLE", {"html": title}, "TEXT"),
-        _q("Email (your artifact is delivered here)"), _email(),
-        _q("Transaction signature — " + PAY_NOTE),
-        _text("e.g. 5KtP...9xQz (from your wallet's transaction history)"),
+        _b("FORM_TITLE", {"html": title + " — " + PREVIEW_NOTE}, "TEXT"),
+        _q("Email (your preview is delivered here)"), _email(),
     ]
 
 

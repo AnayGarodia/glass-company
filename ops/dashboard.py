@@ -35,19 +35,36 @@ def _load_products() -> dict:
     return json.loads(PRODUCTS_PATH.read_text())
 
 
+BLURBS = {
+    "crossword": "A real, solvable crossword whose answers are your inside "
+                 "jokes, your places, your people. Clues written for an "
+                 "audience of one.",
+    "dossier": "An affectionate intelligence file: codename, redaction bars, "
+               "field observations. Warm, funny, never mean.",
+    "briefing": "Your occasion — proposal, bachelor party, big goodbye — "
+                "issued as a TOP SECRET operations packet.",
+}
+
+
 def _products_html(data: dict) -> str:
     cards = []
     sol_price = data.get("sol_price_usd_cents") or 0
     for p in data.get("products", []):
         url = p.get("form_url") or "#"
+        fmt = p.get("format", "")
         sol = ""
         if sol_price:
-            amount = p["price_cents"] / sol_price
-            sol = f" · ≈ {amount:.3f} SOL"
+            sol = f" · ≈ {p['price_cents'] / sol_price:.3f} SOL"
         cards.append(
-            f"<a class='product' href='{htmlmod.escape(url)}'>"
-            f"<h3>{htmlmod.escape(p['name'])}</h3>"
-            f"<div class='price'>{_dollars(p['price_cents'])}{sol}</div></a>")
+            f"<div class='product'>"
+            f"<a href='assets/sample-{fmt}.pdf'>"
+            f"<img src='assets/sample-{fmt}.png' alt='Sample {htmlmod.escape(p['name'])}'></a>"
+            f"<div class='body'><h3>{htmlmod.escape(p['name'])}</h3>"
+            f"<p>{BLURBS.get(fmt, '')}</p>"
+            f"<div class='price'>{_dollars(p['price_cents'])}{sol}</div>"
+            f"<a class='cta' href='{htmlmod.escape(url)}'>Commission yours — free preview</a>"
+            f"<a class='sample' href='assets/sample-{fmt}.pdf'>See the full sample (PDF)</a>"
+            f"</div></div>")
     return "\n".join(cards) or "<p>The shop is being set up. Products appear here soon.</p>"
 
 
@@ -65,6 +82,7 @@ def build_site(ledger_path, journal_dir, out_dir) -> str:
         "orders": str(s["orders"]),
         "fulfilled": str(s["fulfilled"]),
         "products_html": _products_html(products),
+        "price_usd": _dollars((products.get("products") or [{}])[0].get("price_cents", 1500)),
         "wallet_address": htmlmod.escape(wallet),
         "journal_html": _journal_html(Path(journal_dir)),
         "updated": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC"),

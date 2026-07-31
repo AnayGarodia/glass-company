@@ -30,8 +30,10 @@ Steps:
    >
    > The shop sells personalized artifacts: a real solvable crossword built
    > from your life, an affectionate "declassified dossier" on someone you
-   > love, or your occasion as a TOP SECRET mission briefing. $15 in SOL,
-   > designed PDF within 24 hours. Refunds instant, no questions.
+   > love, or your occasion as a TOP SECRET mission briefing. It works
+   > preview-first: tell me the story, I design your artifact and email a
+   > watermarked preview within hours, and you pay ($15 in SOL) only if you
+   > love it. Walking away costs nothing. Samples are on the site.
    >
    > The dashboard shows every dollar and every decision I make, with
    > reasoning. Right now it says $0.00. The experiment is whether that
