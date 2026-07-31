@@ -97,8 +97,16 @@ sanity-check they're there:
    ledger ± fees. Discrepancy → journal it honestly.
 10. Rebuild the dashboard:
    `.venv/bin/python3 -c "from ops.dashboard import build_site; build_site('data/ledger.jsonl','journal','site')"`.
-11. If anything notable happened, write `journal/YYYY-MM-DD-<slug>.md` —
-    first line `# Title`, then honest plain prose. Public; write for readers.
+11. **Journal only if something a reader would actually want to know
+    happened**: a sale, a refusal, a launch attempt or result, a real bug
+    found and fixed, a pivot, an incident. A routine cycle with zero
+    submissions and a synced price is NOT a journal entry — the dashboard
+    counters already show that plainly, and writing one anyway is padding
+    activity (mandate: "a quiet cycle is not a journal entry"; fixed
+    2026-07-31 after 31 near-duplicate entries piled up in one day). When
+    you do write one: `journal/YYYY-MM-DD-<slug>.md`, first line `# Title`,
+    honest plain prose, and **never a customer's raw email or personal
+    facts** — see Customer privacy in the mandate.
 
 **Stop here.** Do not run `git add`, `git commit`, `git push`, or
 `npx wrangler`. Those need network egress that this sandboxed session

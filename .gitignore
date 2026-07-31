@@ -8,3 +8,4 @@ __pycache__/
 .gstack/
 .wrangler/
 _scratch/
+data/state.json
