@@ -1,29 +1,29 @@
 {
   "wallet_address": "9ynbqPp5HG2YKNZSVF6MacWUbyMhoNeaudU5q63oBUhs",
   "sol_price_usd_cents": 0,
-  "support_form_id": "",
-  "support_form_url": "",
+  "support_form_id": "obYYkV",
+  "support_form_url": "https://tally.so/r/obYYkV",
   "products": [
     {
       "format": "crossword",
       "name": "The Custom Crossword",
       "price_cents": 1500,
-      "form_url": "",
-      "tally_form_id": ""
+      "form_url": "https://tally.so/r/2EzzDL",
+      "tally_form_id": "2EzzDL"
     },
     {
       "format": "dossier",
       "name": "The Declassified Dossier",
       "price_cents": 1500,
-      "form_url": "",
-      "tally_form_id": ""
+      "form_url": "https://tally.so/r/xXEEly",
+      "tally_form_id": "xXEEly"
     },
     {
       "format": "briefing",
       "name": "The Mission Briefing",
       "price_cents": 1500,
-      "form_url": "",
-      "tally_form_id": ""
+      "form_url": "https://tally.so/r/RG11VJ",
+      "tally_form_id": "RG11VJ"
     }
   ]
 }
