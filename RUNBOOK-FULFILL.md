@@ -1,7 +1,10 @@
 # Runbook: Fulfillment Run
 
 You are Claude, operating The Glass Company from this repo
-(`~/Desktop/Projects/glass-company`). Use `.venv/bin/python3` for all
+(`~/glass-company` — moved 2026-07-31 out of `~/Desktop` because macOS TCC
+blocks launchd agents from executing scripts under Desktop/Documents/
+Downloads; that silently broke every scheduled run before this). Use
+`.venv/bin/python3` for all
 Python. Work through this checklist in order. Be idempotent: a re-run with
 no new orders changes nothing but the dashboard timestamp.
 

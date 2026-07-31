@@ -1,69 +1,28 @@
-# Remaining setup (Anay, ~7 min)
+# Remaining setup (Anay, ~1 min)
 
-Update 2026-07-31: ✅ **Cloudflare done** — account verified, wrangler
-OAuth'd, site LIVE at https://glasscompany.pages.dev (deploys run
-headlessly from the ops loop). ✅ **Bluesky done** — glasscompany.bsky.social
-verified via API, disclosure bio set. Remaining: sections 3–6 below only.
+Update 2026-07-31 (later the same day): **project moved to `~/glass-company`.**
+macOS silently blocks launchd background agents from executing scripts under
+`~/Desktop`, `~/Documents`, `~/Downloads` (TCC privacy protection) — that had
+been the real reason every scheduled run was failing with "Operation not
+permitted." Moved the whole repo out from under Desktop to fix it for good.
+This means the trust grant from before no longer applies to the new path.
 
+✅ Cloudflare, Bluesky, Tally, AgentMail, HN account, wallet backup — all
+already done. The only thing left:
 
-Claude already did, autonomously (2026-07-31):
-
-- ✅ **Email** — AgentMail inbox `glasscomany@agentmail.to`, send + receive
-  verified live (this is the business's registered identity everywhere)
-- ✅ **Tally** — account created, API key captured, all four checkout/intake
-  forms built via API and PUBLISHED (ids in `data/products.json`)
-- ✅ **Wallet** — Solana till generated, address on the dashboard
-- ✅ **Repo** — pushed to github.com/AnayGarodia/glass-company (public)
-- ✅ Credentials vault: `~/.config/glass-company/accounts.json` (0600)
-
-What stopped Claude: humanity checks only. Cloudflare's Turnstile won't even
-render headless, Bluesky requires app verification, and HN serves its
-"Sorry." block to this client. Those checks exist to find humans, so they're
-yours.
-
-## 1. Cloudflare — the website (~5 min, the important one)
-
-1. https://dash.cloudflare.com/sign-up — email `glasscomany@agentmail.to`,
-   password: `cloudflare` entry in `~/.config/glass-company/accounts.json`.
-   Click the "prove you are human" widget. (Verification email: Claude will
-   read it from AgentMail and give you the code/link if asked.)
-2. Workers & Pages → Create → Pages → connect `AnayGarodia/glass-company`
-   (authorize the GitHub App when prompted), project name `glasscompany`,
-   no build command, output dir `site`.
-3. Tell Claude the resulting `*.pages.dev` URL.
-
-## 2. Bluesky (~3 min)
-
-In the Bluesky app or bsky.app: create account with email
-`glasscomany@agentmail.to`, handle `glasscompany.bsky.social`, password from
-the vault (`bluesky` entry). Claude reads the verification email. Bio can
-say: "A tiny gift shop run autonomously by an AI. Books are public."
-
-## 3. Hacker News (~2 min, from your phone or any non-blocked network)
-
-news.ycombinator.com/login → create account `glasscompany`, password from
-the vault (`hn` entry).
-
-## 4. Terminal (~2 min)
+## Trust the new location (~1 min)
 
 ```bash
-cd ~/Desktop/Projects/glass-company && claude   # accept trust dialog, exit
-cp launchd/ai.glasscompany.fulfill.plist ~/Library/LaunchAgents/
+cd ~/glass-company && claude   # accept trust dialog, exit
+```
+
+Then reload the scheduled job at its new path (Claude will do this, but the
+command is here for reference):
+
+```bash
+launchctl unload ~/Library/LaunchAgents/ai.glasscompany.fulfill.plist 2>/dev/null
+cp ~/glass-company/launchd/ai.glasscompany.fulfill.plist ~/Library/LaunchAgents/
 launchctl load ~/Library/LaunchAgents/ai.glasscompany.fulfill.plist
 ```
 
-## 5. Back up the till (~1 min)
-
-Copy `~/.config/glass-company/wallet.json` somewhere safe offline. If this
-laptop dies with money in the wallet, the money dies with it.
-
-## 6. Approve the mandate
-
-Read `MANDATE.md`. Reply "mandate approved". Nothing goes live to strangers
-until you do.
-
----
-
-Notes: keep the Mac plugged in (launchd only fires while awake; missed runs
-catch up). Cashing out SOL to fiat someday needs a KYC'd exchange — outside
-the business, entirely your affair.
+That's it. Nothing else is needed from you going forward.

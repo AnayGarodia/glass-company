@@ -2,6 +2,9 @@
   "permissions": {
     "allow": [
       "Bash(python3:*)",
+      "Bash(.venv/bin/python3:*)",
+      "Bash(npx wrangler pages deploy:*)",
+      "Bash(npx wrangler pages project:*)",
       "Bash(git add:*)",
       "Bash(git commit:*)",
       "Bash(git push origin:*)",

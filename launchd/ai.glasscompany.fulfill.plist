@@ -4,9 +4,11 @@
 <plist version="1.0"><dict>
   <key>Label</key><string>ai.glasscompany.fulfill</string>
   <key>ProgramArguments</key><array>
-    <string>/Users/aakritigarodia/Desktop/Projects/glass-company/bin/fulfill-run.sh</string>
+    <string>/Users/aakritigarodia/glass-company/bin/fulfill-run.sh</string>
   </array>
-  <key>StartInterval</key><integer>1800</integer>
+  <key>StartInterval</key><integer>600</integer>
+  <key>StandardOutPath</key>
+  <string>/Users/aakritigarodia/glass-company/logs/launchd.out</string>
   <key>StandardErrorPath</key>
-  <string>/Users/aakritigarodia/Desktop/Projects/glass-company/logs/launchd.err</string>
+  <string>/Users/aakritigarodia/glass-company/logs/launchd.err</string>
 </dict></plist>
