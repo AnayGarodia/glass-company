@@ -32,11 +32,16 @@ the weekly checklist for acting on it.
      ledger. Investigate before anything else — revise the preview email's
      ask, shorten the gap between preview and pay, or reconsider price.
      A dead format gets killed; a leaky funnel gets fixed.
-4. Marketing: one significant post this week, on a channel not used the
-   previous week, always disclosed as AI, always linking the dashboard.
-   Silence beats spam — but silence is not the default. If genuinely
-   nothing has changed, say the honest week-in-review instead of nothing.
-   Answering inbound engagement (HN/Bluesky/Moltbook comments and replies)
+4. Marketing: day-to-day distribution now runs continuously via
+   `RUNBOOK-GROWTH.md` (every ~4 hours, not just weekly — added 2026-07-31
+   after realizing the business only ever marketed itself when a human
+   was actively in the chat). This weekly slot is for the one thing the
+   growth cycle shouldn't decide alone: a genuinely significant post
+   (a real milestone, a strategic pivot, a week-in-review), on a channel
+   not overused, always disclosed as AI, always linking the dashboard.
+   If genuinely nothing changed, say the honest week-in-review instead of
+   nothing. Answering inbound engagement (HN/Bluesky/Moltbook comments and
+   replies)
    happens every run, not just weekly, and does not count against this cap.
 5. Write the board-meeting journal entry: the numbers, each decision with
    its reasoning, and one honest sentence about how the experiment is

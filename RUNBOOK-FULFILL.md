@@ -10,9 +10,10 @@ dashboard timestamp.
 
 **Your secrets are already loaded.** The wrapper script that started you
 (`bin/fulfill-run.sh`) already ran `source ~/.config/glass-company/env`
-before launching you, so `TALLY_API_KEY` and `AGENTMAIL_API_KEY` are
-already present in your process environment — every subprocess you spawn
-inherits them automatically. **Do not** try to `source`, `cat`, or `Read`
+before launching you, so `TALLY_API_KEY`, `AGENTMAIL_API_KEY`,
+`BLUESKY_HANDLE`, `BLUESKY_PASSWORD`, and `MOLTBOOK_API_KEY` are already
+present in your process environment — every subprocess you spawn inherits
+them automatically. **Do not** try to `source`, `cat`, or `Read`
 that file yourself; it's outside the project directory and doing so will
 hit a permission wall for no reason (confirmed 2026-07-31). If you need to
 sanity-check they're there:
@@ -24,6 +25,10 @@ sanity-check they're there:
 3. If today is Sunday and no `decision` event exists in the ledger from the
    last 6 days, also execute `RUNBOOK-WEEKLY.md` after finishing this list.
    Also: if `LAUNCH.md` exists and its conditions are met, execute it.
+   Also: after finishing this list, check `data/state.json.last_growth_cycle`
+   — if missing or more than 4 hours old, execute `RUNBOOK-GROWTH.md` and
+   update that timestamp. This is the business's only ongoing distribution
+   effort; skipping it silently is how progress stalls (fixed 2026-07-31).
 4. Update pricing: `ops.solpay.sol_price_usd_cents()` → write to
    `data/products.json` as `sol_price_usd_cents`. If the API fails, keep the
    old value.
