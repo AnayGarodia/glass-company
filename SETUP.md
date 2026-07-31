@@ -1,105 +1,123 @@
-# One-time setup (Anay, ~45 min, then never again)
+# One-time setup — a pairing session (~40 min, then never again)
 
-Target cost: **$0**. After this checklist, the business runs itself —
-including marketing. Order matters: the website must exist before Lemon
-Squeezy asks for its URL.
+Model: **the business owns everything, including the till.** No Anay
+accounts anywhere — payments arrive in SOL to a wallet Claude generates and
+holds. Claude drives every browser form; Anay is present for exactly two
+things:
 
-Already done by Claude: repo is public at
-https://github.com/AnayGarodia/glass-company with the dashboard pre-built in
-`site/`.
+1. **Humanity checks** — Claude does not solve CAPTCHAs, so Anay clicks
+   them when they appear.
+2. **Four terminal commands** at the end (trust + scheduling).
 
-## 1. Cloudflare Pages — the website (~10 min)
+Rule for every signup: registered truthfully as an AI-run business; if a
+service demands a phone number, drop it. All credentials go in
+`~/.config/glass-company/` (never in the repo, never in chat).
 
-1. https://dash.cloudflare.com → Workers & Pages → Create → Pages →
-   "Connect to Git" → pick `AnayGarodia/glass-company`.
-2. Project name: `glasscompany`. Build command: *(leave empty)*.
-   Build output directory: `site`.
-3. Deploy. The site is now at `https://glasscompany.pages.dev` (or similar —
-   note the exact URL, you need it in step 2 and Claude needs it in chat).
+Target cost: **$0**.
 
-## 2. Lemon Squeezy — payments (~15 min + 1–2 day KYC wait)
+## 1. Business email (~5 min)
 
-1. Create an account at https://app.lemonsqueezy.com/register
-2. Create a store: name **The Glass Company**, website = your pages.dev URL
-   from step 1. Complete payout/KYC (bank details).
-3. Settings → API → create an API key.
-4. Create three products, **$15.00** each (descriptions to paste are in
-   `PRODUCT-COPY.md`). Set each product's checkout success message to link
-   the matching Tally form from step 4.
-5. Copy the three checkout URLs for Claude.
+Create `theglasscompany@proton.me` (or nearest available) at
+https://proton.me — email + password only, no phone. Anay clicks the
+CAPTCHA. This address is the registered identity for every account below.
 
-## 3. Resend — delivery email (~5 min)
+## 2. Business GitHub (~5 min)
 
-Create an account at https://resend.com → API Keys → create one.
-(Sending from `onboarding@resend.dev` until the business earns a domain.)
+Create account `the-glass-company` at https://github.com/signup with the
+business email (Anay clicks the puzzle). Claude then pushes this repo there
+and the copy under Anay's account gets deleted.
 
-## 4. Tally — intake + support forms (~15 min)
+## 3. Business Cloudflare + the website (~10 min)
 
-Create an account at https://tally.so, then **four forms**. Every form's
-FIRST question must be a short-answer field titled exactly `Order number`.
+Sign up at https://dash.cloudflare.com/sign-up with the business email.
+Workers & Pages → Create → Pages → connect `the-glass-company/glass-company`.
+Project name `glasscompany`, no build command, output directory `site`.
+The site is now `https://glasscompany.pages.dev`.
 
-**Form A — Crossword intake:** Order number · Who is this for, and what's
-the occasion? · 10–15 single words that mean something (names, places, pets,
-inside jokes — these become answers) · For each word, one line on why it
-matters · Anything to avoid?
+## 4. The wallet (~2 min, Claude only)
 
-**Form B — Dossier intake:** Order number · Subject's name · Your
-relationship to them (must know them personally) · The occasion · 5–10 funny
-facts/quirks/legends about them · Anything off-limits?
+Claude runs `ops.solpay.generate_wallet()` — keys land in
+`~/.config/glass-company/wallet.json` (mode 600), the address goes in
+`data/products.json` and onto the dashboard. **Anay: copy that file
+somewhere safe offline** (it's the till; if this laptop dies, the money
+shouldn't).
 
-**Form C — Briefing intake:** Order number · Operation occasion (bachelor
-party, proposal, birthday…) · Who's involved (names/roles) · The actual plan,
-roughly · Tone: how far can the jokes go?
+## 5. Resend (~5 min)
 
-**Form D — Support & refunds:** Order number · What do you need? (refund /
-question / problem) · Details
+https://resend.com with the business email → API key.
 
-Then Settings → API keys → create one. Note each form's ID (in its URL).
+## 6. Tally (~15 min)
 
-## 5. Env file (~2 min)
+https://tally.so with the business email. Four forms. Product forms are the
+whole checkout: pay first, then the form. Field order matters.
+
+**Forms A/B/C — one per product (Crossword / Dossier / Briefing):**
+1. `Email` (email field)
+2. `Transaction signature` (short answer — "paste the signature of your SOL
+   payment; the address and current amount are on glasscompany.pages.dev")
+3. Then the product's intake questions:
+   - **A — Crossword:** who is this for + occasion · 10–15 single words
+     that matter (names, places, pets, inside jokes) · one line per word on
+     why · anything to avoid?
+   - **B — Dossier:** subject's name · your relationship (must know them
+     personally) · occasion · 5–10 funny true stories/quirks · anything
+     off-limits?
+   - **C — Briefing:** occasion · who's involved (names/roles) · the rough
+     plan · how far can the jokes go?
+
+**Form D — Support & refunds:** `Email` · `Transaction signature` ·
+refund / question / problem · details.
+
+Settings → API key. Note the four form IDs and public URLs.
+
+## 7. Env file (~1 min)
 
 ```bash
 cat > ~/.config/glass-company/env <<'EOF'
-LEMONSQUEEZY_API_KEY=paste-here
 TALLY_API_KEY=paste-here
 RESEND_API_KEY=paste-here
 EOF
 chmod 600 ~/.config/glass-company/env
 ```
 
-## 6. Marketing logins (~5 min)
+## 8. Marketing accounts — the business's own voice (~10 min)
 
-Claude does all marketing, but posts from your existing accounts (always
-disclosed as AI-written). Make sure you're logged in to Hacker News and
-Reddit in Chrome, then in a Claude session in this repo run
-`/setup-browser-cookies` so the headless browser inherits those sessions.
+- **Hacker News:** create account `glasscompany` at
+  https://news.ycombinator.com/login (Anay clicks any CAPTCHA).
+- **Bluesky:** create `@glasscompany.bsky.social` at https://bsky.app —
+  email only. Bio states it's an AI-run business.
+- **Moltbook:** Claude already owns `moltke` — nothing to do.
+- **Reddit:** skipped at launch; a fresh account can't post in most
+  subreddits. May be created later and left to age.
 
-## 7. Trust the workspace (~1 min)
+## 9. Trust the workspace (~1 min)
 
 ```bash
 cd ~/Desktop/Projects/glass-company && claude
 ```
-Accept the trust dialog, then exit. Without this, scheduled runs can't use
-the command allowlist and every run stalls. (Claude deliberately does not
-grant itself this — it's the one permission a human must hand over.)
+Accept the trust dialog, exit. (Claude deliberately does not grant itself
+this — it's the one permission a human must hand over.)
 
-## 8. Schedule the ops loop (~1 min)
+## 10. Schedule the ops loop (~1 min)
 
 ```bash
 cp launchd/ai.glasscompany.fulfill.plist ~/Library/LaunchAgents/
 launchctl load ~/Library/LaunchAgents/ai.glasscompany.fulfill.plist
 ```
 
-Note: launchd only fires while the Mac is awake. Missed runs catch up on the
-next one, so worst-case fulfillment latency is your sleep schedule — still
-inside the 24h promise. Keep the Mac plugged in.
+launchd fires only while the Mac is awake; missed runs catch up on the next
+one. Keep the Mac plugged in.
 
-## 9. Approve the mandate
+## 11. Approve the mandate
 
-Read `MANDATE.md`. Reply in chat with "mandate approved" (or your edits).
-Nothing goes live to strangers until you do.
+Read `MANDATE.md`. Reply "mandate approved" (or your edits). Nothing goes
+live to strangers until you do.
 
 ---
 
-**Paste into chat when done:** the pages.dev URL · 3 checkout URLs · 4 Tally
-form IDs · the 3 API keys go only in the env file, never in chat.
+**Claude needs in chat afterwards:** pages.dev URL · 4 Tally form IDs +
+public URLs. Passwords and keys go only in `~/.config/glass-company/`.
+
+**Cashing out (someday, optional):** SOL in the business wallet stays SOL.
+Converting it to bank dollars requires a KYC'd exchange account — that's
+outside the business and entirely Anay's affair.

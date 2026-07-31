@@ -44,15 +44,18 @@ Quality bar: each artifact gets a self-QA pass before delivery (crossword must
 actually solve; names/facts must be used correctly; layout must look designed,
 not templated). A bad artifact triggers regeneration, not delivery.
 
-## Money
+## Money (amended 2026-07-30: zero Anay accounts, at Anay's direction)
 
-- **Lemon Squeezy** as merchant of record: handles global sales tax/VAT,
-  checkout, receipts. This is what makes zero human involvement true.
-- One product per format, checkout collects email; a Tally form (free tier)
-  linked from the post-checkout redirect and receipt collects the
-  personalization facts, keyed by order number. If a paid
-  order has no intake data after 24h, email a reminder; refund at 7 days.
-- Payouts go to Anay's bank.
+- **Business-owned Solana wallet** — the AI generates and holds the keys
+  (`~/.config/glass-company/wallet.json`); no card processor, because every
+  card processor requires human KYC and Anay's accounts are off-limits.
+- Buyers pay SOL to the published address, then fill the product's Tally
+  form (email + transaction signature + intake facts). The ops run verifies
+  the payment on-chain before fulfilling; 5% price slack for SOL movement.
+- Known trade-off, accepted: crypto checkout loses most mainstream gift
+  buyers; launch channels (HN, Bluesky, Moltbook) skew crypto-capable, and
+  "the AI owns the till" strengthens the story.
+- Funds stay in the wallet; cashing out to fiat is outside the business.
 - **Refund policy: instant, no questions.** Keeps support fully autonomous.
 - Costs ledger: every dollar spent (domain, ads, fees) recorded and published.
 
