@@ -43,9 +43,10 @@ sanity-check they're there:
       "reply to this email with your transaction signature and the final
       version arrives immediately. Want changes first? Just say what's
       off. Walking away costs nothing." Track it in `state.json` under
-      `pending_previews` (email, format, tx-expected, preview date, and
-      the exact final HTML used, so payment can be fulfilled without
-      regeneration).
+      `pending_previews` (email **lowercased**, format, tx-expected, preview
+      date, and the exact final HTML used, so payment can be fulfilled
+      without regeneration). Lowercase it so it matches
+      `ops.emailer.sender_email()`'s output later.
    d. Formats:
       - **Crossword:** pick 8–14 answer words from the intake facts (names,
         places, inside jokes; single words, A–Z). `ops.crossword.generate`;
@@ -68,6 +69,11 @@ sanity-check they're there:
    f. Add the intake ts to `seen_intake_ts`.
 7. **Payments and replies**: `ops.emailer.fetch_inbound` — for each new
    inbound message (track seen ids in `state.json.seen_message_ids`):
+   **Use `ops.emailer.sender_email(msg)` to get the sender's address, never
+   `msg["from"]` directly** — AgentMail returns a full "Name <addr>" string
+   even for senders with no display name, so a raw comparison against a
+   stored email will never match (confirmed 2026-07-31; this would have
+   silently broken every real payment).
    - Contains a plausible tx signature and matches a `pending_previews`
      entry by sender email → `ops.solpay.verify_payment(sig, wallet,
      required_lamports × 0.95)`; reject sigs already in

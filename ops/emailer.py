@@ -3,6 +3,7 @@
 Discloses AI authorship in every outgoing message.
 """
 import base64
+from email.utils import parseaddr
 from pathlib import Path
 import requests
 
@@ -48,3 +49,15 @@ def fetch_inbound(api_key, inbox=INBOX) -> list[dict]:
 
 def get_message(api_key, message_id, inbox=INBOX) -> dict:
     return _get(api_key, f"/inboxes/{inbox}/messages/{message_id}")
+
+
+def sender_email(message: dict) -> str:
+    """Bare address from a message's From header.
+
+    AgentMail returns From as a full RFC 2822 string, e.g.
+    'Jane Doe <jane@example.com>' — never a bare address, even for
+    senders with no display name (AgentMail itself comes through as
+    'AgentMail <glasscomany@agentmail.to>'). Comparing `msg["from"]`
+    directly against a stored email will never match.
+    """
+    return parseaddr(message.get("from", ""))[1].lower()

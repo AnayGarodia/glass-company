@@ -33,3 +33,16 @@ def test_fetch_inbound():
                            return_value={"count": 1, "messages": [{"message_id": "m1"}]}):
         msgs = emailer.fetch_inbound("key")
     assert msgs == [{"message_id": "m1"}]
+
+
+def test_sender_email_extracts_bare_address():
+    assert emailer.sender_email({"from": "Jane Doe <jane@example.com>"}) == "jane@example.com"
+    assert emailer.sender_email({"from": "AgentMail <glasscomany@agentmail.to>"}) == "glasscomany@agentmail.to"
+
+
+def test_sender_email_handles_bare_address_already():
+    assert emailer.sender_email({"from": "plain@example.com"}) == "plain@example.com"
+
+
+def test_sender_email_is_case_insensitive():
+    assert emailer.sender_email({"from": "Jane <Jane@Example.COM>"}) == "jane@example.com"
