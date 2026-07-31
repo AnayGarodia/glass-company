@@ -1,6 +1,7 @@
 .venv/
 logs/*.log
 logs/launchd.err
+logs/launchd.out
 __pycache__/
 *.pyc
 .pytest_cache/
