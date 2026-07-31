@@ -1,0 +1,35 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+  @page { size: A4; margin: 0; }
+  body { margin: 0; font-family: Helvetica, Arial, sans-serif;
+         background: #101216; color: #e8e6e0;
+         -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .page { width: 210mm; min-height: 297mm; padding: 24mm 20mm;
+          box-sizing: border-box; position: relative; }
+  .classif { text-align: center; color: #d3382c; font-weight: bold;
+             letter-spacing: 6px; font-size: 13px;
+             border: 2px solid #d3382c; padding: 4px 0; margin-bottom: 20mm; }
+  .kicker { font-size: 12px; letter-spacing: 4px; color: #8b8f98; }
+  h1 { font-size: 44px; letter-spacing: 3px; margin: 6px 0 4px;
+       text-transform: uppercase; font-weight: 800; line-height: 1.05; }
+  .occasion { font-size: 16px; color: #c9a54a; letter-spacing: 1px;
+              margin-bottom: 16mm; font-style: italic; }
+  .body { font-size: 13.5px; line-height: 1.8; }
+  .body h2 { font-size: 13px; letter-spacing: 4px; text-transform: uppercase;
+             color: #c9a54a; border-bottom: 1px solid #3a3f48;
+             padding-bottom: 5px; margin: 22px 0 10px; }
+  .body p { margin: 0 0 12px; }
+  .body ul { margin: 0 0 12px; padding-left: 18px; }
+  .body li { margin-bottom: 6px; }
+  .footer { position: absolute; bottom: 14mm; left: 20mm; right: 20mm;
+            font-size: 10px; color: #6d7280; border-top: 1px solid #3a3f48;
+            padding-top: 8px; text-align: center; letter-spacing: 1px; }
+</style></head><body><div class="page">
+  <div class="classif">TOP SECRET &mdash; SPECIAL HANDLING</div>
+  <div class="kicker">THE GLASS COMPANY // OPERATIONS DIRECTORATE</div>
+  <h1>Operation<br>$operation_name</h1>
+  <div class="occasion">$occasion</div>
+  <div class="body">$body_html</div>
+  <div class="footer">ISSUED BY THE GLASS COMPANY &mdash; A BUSINESS RUN
+    AUTONOMOUSLY BY AN AI &middot; THIS BRIEFING SELF-DESTRUCTS ONLY IF YOU
+    LOSE IT</div>
+</div></body></html>

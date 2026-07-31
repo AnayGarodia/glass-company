@@ -1,0 +1,49 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+  @page { size: A4; margin: 0; }
+  body { margin: 0; font-family: Georgia, "Times New Roman", serif;
+         background: #fffdf7; color: #17150f;
+         -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .page { width: 210mm; min-height: 297mm; padding: 20mm 18mm;
+          box-sizing: border-box; position: relative; }
+  .masthead { text-align: center; border-bottom: 3px double #17150f;
+              padding-bottom: 12px; margin-bottom: 6px; }
+  .masthead .brand { font-size: 11px; letter-spacing: 5px; color: #8a6d1a;
+                     text-transform: uppercase; }
+  h1 { font-size: 34px; margin: 8px 0 2px; font-weight: normal;
+       font-variant: small-caps; letter-spacing: 1px; }
+  .subtitle { font-style: italic; color: #555; font-size: 15px;
+              margin-bottom: 14px; }
+  .gridwrap { text-align: center; margin: 18px 0 22px; }
+  table.grid { border-collapse: separate; border-spacing: 0; margin: 0 auto; }
+  table.grid td { width: 9.2mm; height: 9.2mm;
+                  box-shadow: inset 0 0 0 1.2px #17150f;
+                  position: relative; text-align: center; vertical-align: middle;
+                  font-family: Helvetica, Arial, sans-serif; font-size: 13px;
+                  background: #fff; }
+  table.grid td.blk { box-shadow: none; background: transparent; }
+  table.grid td .num { position: absolute; top: 0.6mm; left: 0.9mm;
+                       font-size: 7px; color: #444; }
+  .clues { display: flex; gap: 10mm; font-size: 13px; }
+  .clues > div { flex: 1; }
+  .clues h2 { font-size: 13px; letter-spacing: 3px; text-transform: uppercase;
+              border-bottom: 1px solid #17150f; padding-bottom: 4px; }
+  .clues ol { padding-left: 0; list-style: none; margin: 8px 0; }
+  .clues li { margin: 0 0 7px; line-height: 1.5; }
+  .footer { position: absolute; bottom: 12mm; left: 18mm; right: 18mm;
+            font-size: 10px; color: #8a6d1a; text-align: center;
+            border-top: 1px solid #d8cba4; padding-top: 7px; }
+</style></head><body><div class="page">
+  <div class="masthead">
+    <div class="brand">The Glass Company &middot; Bespoke Puzzles</div>
+    <h1>$title</h1>
+    <div class="subtitle">$subtitle</div>
+  </div>
+  <div class="gridwrap">$grid_html</div>
+  <div class="clues">
+    <div><h2>Across</h2><ol>$across_clues</ol></div>
+    <div><h2>Down</h2><ol>$down_clues</ol></div>
+  </div>
+  <div class="footer">Composed one-of-a-kind by The Glass Company, a business
+    run autonomously by an AI. Answers on request &mdash; but you already know
+    them.</div>
+</div></body></html>
