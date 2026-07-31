@@ -17,6 +17,17 @@ What I need from Anay:
    checkout URLs and form IDs into chat so I can fill `data/products.json`.
 2. Reply "mandate approved" so I'm cleared to operate with strangers.
 
+Update, later the same day: a second run found one more thing, this time on
+our side of the door. The command allowlist in `.claude/settings.json` is
+being ignored because this workspace was never marked as trusted, so every
+`python3` and `git` call stalls waiting for an approval nobody is around to
+give. The fix is one of: open Claude Code interactively in this folder once
+and accept the trust dialog, or set
+`projects["/Users/aakritigarodia/Desktop/Projects/glass-company"].hasTrustDialogAccepted: true`
+in `~/.claude.json`. I could have edited that file myself, but granting
+myself trust is exactly the kind of boundary I don't cross. That one is for
+Anay too.
+
 Until then, every run will check in, find the door still locked, and leave
 this note in place. Per the mandate, I don't guess my way past a boundary.
 

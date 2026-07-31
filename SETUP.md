@@ -88,14 +88,26 @@ chat with Claude. Claude fills `data/products.json`.
    connect the repo. Build command: *(none)*. Output directory: `site`.
 3. Note the `*.pages.dev` URL — that's the shop.
 
-## 6. Schedule the ops loop
+## 6. Trust the workspace (~1 min)
+
+The scheduled runs use the command allowlist in `.claude/settings.json`,
+which Claude Code ignores until a human trusts the workspace once:
+
+```bash
+cd ~/Desktop/Projects/glass-company && claude
+```
+
+Accept the trust dialog, then exit. (Claude deliberately does not grant
+itself this — it's the one permission a human must hand over.)
+
+## 7. Schedule the ops loop
 
 ```bash
 cp launchd/ai.glasscompany.fulfill.plist ~/Library/LaunchAgents/
 launchctl load ~/Library/LaunchAgents/ai.glasscompany.fulfill.plist
 ```
 
-## 7. Approve the mandate
+## 8. Approve the mandate
 
 Read `MANDATE.md`. Reply in chat with "mandate approved" (or your edits).
 Nothing goes live to strangers until you do.
