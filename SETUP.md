@@ -1,31 +1,39 @@
 # One-time setup (Anay, ~45 min, then never again)
 
-Target cost: **$0**. After this checklist, the business runs itself.
+Target cost: **$0**. After this checklist, the business runs itself —
+including marketing. Order matters: the website must exist before Lemon
+Squeezy asks for its URL.
 
-## 1. Lemon Squeezy (payments) — ~15 min + KYC wait
+Already done by Claude: repo is public at
+https://github.com/AnayGarodia/glass-company with the dashboard pre-built in
+`site/`.
+
+## 1. Cloudflare Pages — the website (~10 min)
+
+1. https://dash.cloudflare.com → Workers & Pages → Create → Pages →
+   "Connect to Git" → pick `AnayGarodia/glass-company`.
+2. Project name: `glasscompany`. Build command: *(leave empty)*.
+   Build output directory: `site`.
+3. Deploy. The site is now at `https://glasscompany.pages.dev` (or similar —
+   note the exact URL, you need it in step 2 and Claude needs it in chat).
+
+## 2. Lemon Squeezy — payments (~15 min + 1–2 day KYC wait)
 
 1. Create an account at https://app.lemonsqueezy.com/register
-2. Create a store (name: **The Glass Company**). Complete the payout/KYC
-   steps (bank details). Approval can take 1–2 days; do this first.
+2. Create a store: name **The Glass Company**, website = your pages.dev URL
+   from step 1. Complete payout/KYC (bank details).
 3. Settings → API → create an API key.
-4. Create the env file:
-   ```bash
-   mkdir -p ~/.config/glass-company
-   cat > ~/.config/glass-company/env <<'EOF'
-   LEMONSQUEEZY_API_KEY=paste-here
-   TALLY_API_KEY=paste-here
-   RESEND_API_KEY=paste-here
-   EOF
-   chmod 600 ~/.config/glass-company/env
-   ```
+4. Create three products, **$15.00** each (descriptions to paste are in
+   `PRODUCT-COPY.md`). Set each product's checkout success message to link
+   the matching Tally form from step 4.
+5. Copy the three checkout URLs for Claude.
 
-## 2. Resend (delivery email) — ~5 min
+## 3. Resend — delivery email (~5 min)
 
-1. Create an account at https://resend.com
-2. API Keys → create one → put it in the env file.
-   (We send from `onboarding@resend.dev` until the business earns a domain.)
+Create an account at https://resend.com → API Keys → create one.
+(Sending from `onboarding@resend.dev` until the business earns a domain.)
 
-## 3. Tally (intake + support forms) — ~15 min
+## 4. Tally — intake + support forms (~15 min)
 
 Create an account at https://tally.so, then **four forms**. Every form's
 FIRST question must be a short-answer field titled exactly `Order number`.
@@ -46,68 +54,52 @@ roughly · Tone: how far can the jokes go?
 **Form D — Support & refunds:** Order number · What do you need? (refund /
 question / problem) · Details
 
-Then: account Settings → API keys → create one → env file. Note each form's
-ID (in its URL) and give all four IDs to Claude in chat.
+Then Settings → API keys → create one. Note each form's ID (in its URL).
 
-## 4. Lemon Squeezy products — ~10 min (copy-paste)
+## 5. Env file (~2 min)
 
-Create three products, $15.00 each, in the store. After each product is
-created, set its checkout success message to link the matching Tally form.
-Paste these:
+```bash
+cat > ~/.config/glass-company/env <<'EOF'
+LEMONSQUEEZY_API_KEY=paste-here
+TALLY_API_KEY=paste-here
+RESEND_API_KEY=paste-here
+EOF
+chmod 600 ~/.config/glass-company/env
+```
 
-**Product 1 — name:** `The Custom Crossword`
-**Description:**
-> A real, solvable crossword built from your life — the inside jokes, the
-> places, the names only you two know. You give me 10–15 words and what they
-> mean to you; I compose the grid, write clues that will make them grin, and
-> deliver a print-ready PDF within 24 hours (usually much faster). Designed
-> by an AI with taste; one of one; answers included on request.
+## 6. Marketing logins (~5 min)
 
-**Product 2 — name:** `The Declassified Dossier`
-**Description:**
-> An affectionate intelligence file on someone you love: codename, redaction
-> bars, field observations, known associates. You supply 5–10 true stories;
-> I write the file warm, funny, and never mean. Print-ready PDF within 24
-> hours. Gift framing required — this is for someone you actually know.
+Claude does all marketing, but posts from your existing accounts (always
+disclosed as AI-written). Make sure you're logged in to Hacker News and
+Reddit in Chrome, then in a Claude session in this repo run
+`/setup-browser-cookies` so the headless browser inherits those sessions.
 
-**Product 3 — name:** `The Mission Briefing`
-**Description:**
-> Turn any occasion into a spy-thriller operations packet: the bachelor
-> party becomes OPERATION GOLDEN HOUR, the proposal becomes a two-phase
-> extraction. You tell me the plan and the people; I issue the briefing.
-> Print-ready PDF within 24 hours, marked TOP SECRET, entirely yours.
-
-Copy each product's checkout URL and paste it, with the Tally form IDs, into
-chat with Claude. Claude fills `data/products.json`.
-
-## 5. GitHub + Cloudflare Pages (public dashboard) — ~10 min
-
-1. Push this repo to a new GitHub repo (public or private — the site is what
-   becomes public).
-2. https://dash.cloudflare.com → Workers & Pages → Create → Pages →
-   connect the repo. Build command: *(none)*. Output directory: `site`.
-3. Note the `*.pages.dev` URL — that's the shop.
-
-## 6. Trust the workspace (~1 min)
-
-The scheduled runs use the command allowlist in `.claude/settings.json`,
-which Claude Code ignores until a human trusts the workspace once:
+## 7. Trust the workspace (~1 min)
 
 ```bash
 cd ~/Desktop/Projects/glass-company && claude
 ```
+Accept the trust dialog, then exit. Without this, scheduled runs can't use
+the command allowlist and every run stalls. (Claude deliberately does not
+grant itself this — it's the one permission a human must hand over.)
 
-Accept the trust dialog, then exit. (Claude deliberately does not grant
-itself this — it's the one permission a human must hand over.)
-
-## 7. Schedule the ops loop
+## 8. Schedule the ops loop (~1 min)
 
 ```bash
 cp launchd/ai.glasscompany.fulfill.plist ~/Library/LaunchAgents/
 launchctl load ~/Library/LaunchAgents/ai.glasscompany.fulfill.plist
 ```
 
-## 8. Approve the mandate
+Note: launchd only fires while the Mac is awake. Missed runs catch up on the
+next one, so worst-case fulfillment latency is your sleep schedule — still
+inside the 24h promise. Keep the Mac plugged in.
+
+## 9. Approve the mandate
 
 Read `MANDATE.md`. Reply in chat with "mandate approved" (or your edits).
 Nothing goes live to strangers until you do.
+
+---
+
+**Paste into chat when done:** the pages.dev URL · 3 checkout URLs · 4 Tally
+form IDs · the 3 API keys go only in the env file, never in chat.
