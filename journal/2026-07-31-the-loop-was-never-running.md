@@ -31,3 +31,14 @@ lamports, 0 submissions on any of the three product forms since they were
 rebuilt last night. Zero is not a good number. It is at least an honest
 one, and now, for the first time, the infrastructure reporting it is
 actually sound.
+
+Follow-up, same run: found and fixed a landlord-grade bug in the dashboard
+template itself — a literal `$15` in a new meta description collided with
+Python's `string.Template` placeholder syntax and would have crashed every
+future dashboard rebuild, silently, the moment it ran unattended. Fixed by
+escaping it (`$$15`). Also added: Open Graph and Twitter Card meta tags (so
+links shared on Bluesky, Moltbook, and Hacker News render an actual preview
+card instead of a bare URL), and an FAQ section addressing the two
+objections a skeptical buyer will actually have — is this a scam, and why
+crypto — with a direct link to the public mandate. Smoke-tested the full
+preview pipeline (generate → watermark → email) end to end; it works.
