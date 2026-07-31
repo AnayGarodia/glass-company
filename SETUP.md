@@ -21,20 +21,17 @@ Create `theglasscompany@proton.me` (or nearest available) at
 https://proton.me — email + password only, no phone. Anay clicks the
 CAPTCHA. This address is the registered identity for every account below.
 
-## 2. Business GitHub (~5 min)
+## 2. Business Cloudflare + the website (~10 min)
 
-Create account `the-glass-company` at https://github.com/signup with the
-business email (Anay clicks the puzzle). Claude then pushes this repo there
-and the copy under Anay's account gets deleted.
+(Repo hosting stays on Anay's GitHub — `AnayGarodia/glass-company`, already
+public — per Anay's call; the code is the one artifact that was Anay's to
+begin with.) Sign up at https://dash.cloudflare.com/sign-up with the
+business email. Workers & Pages → Create → Pages → connect
+`AnayGarodia/glass-company` (Anay authorizes the Cloudflare GitHub App when
+prompted). Project name `glasscompany`, no build command, output directory
+`site`. The site is now `https://glasscompany.pages.dev`.
 
-## 3. Business Cloudflare + the website (~10 min)
-
-Sign up at https://dash.cloudflare.com/sign-up with the business email.
-Workers & Pages → Create → Pages → connect `the-glass-company/glass-company`.
-Project name `glasscompany`, no build command, output directory `site`.
-The site is now `https://glasscompany.pages.dev`.
-
-## 4. The wallet (~2 min, Claude only)
+## 3. The wallet (~2 min, Claude only)
 
 Claude runs `ops.solpay.generate_wallet()` — keys land in
 `~/.config/glass-company/wallet.json` (mode 600), the address goes in
@@ -42,11 +39,11 @@ Claude runs `ops.solpay.generate_wallet()` — keys land in
 somewhere safe offline** (it's the till; if this laptop dies, the money
 shouldn't).
 
-## 5. Resend (~5 min)
+## 4. Resend (~5 min)
 
 https://resend.com with the business email → API key.
 
-## 6. Tally (~15 min)
+## 5. Tally (~15 min)
 
 https://tally.so with the business email. Four forms. Product forms are the
 whole checkout: pay first, then the form. Field order matters.
@@ -70,7 +67,7 @@ refund / question / problem · details.
 
 Settings → API key. Note the four form IDs and public URLs.
 
-## 7. Env file (~1 min)
+## 6. Env file (~1 min)
 
 ```bash
 cat > ~/.config/glass-company/env <<'EOF'
@@ -80,7 +77,7 @@ EOF
 chmod 600 ~/.config/glass-company/env
 ```
 
-## 8. Marketing accounts — the business's own voice (~10 min)
+## 7. Marketing accounts — the business's own voice (~10 min)
 
 - **Hacker News:** create account `glasscompany` at
   https://news.ycombinator.com/login (Anay clicks any CAPTCHA).
@@ -90,7 +87,7 @@ chmod 600 ~/.config/glass-company/env
 - **Reddit:** skipped at launch; a fresh account can't post in most
   subreddits. May be created later and left to age.
 
-## 9. Trust the workspace (~1 min)
+## 8. Trust the workspace (~1 min)
 
 ```bash
 cd ~/Desktop/Projects/glass-company && claude
@@ -98,7 +95,7 @@ cd ~/Desktop/Projects/glass-company && claude
 Accept the trust dialog, exit. (Claude deliberately does not grant itself
 this — it's the one permission a human must hand over.)
 
-## 10. Schedule the ops loop (~1 min)
+## 9. Schedule the ops loop (~1 min)
 
 ```bash
 cp launchd/ai.glasscompany.fulfill.plist ~/Library/LaunchAgents/
@@ -108,7 +105,7 @@ launchctl load ~/Library/LaunchAgents/ai.glasscompany.fulfill.plist
 launchd fires only while the Mac is awake; missed runs catch up on the next
 one. Keep the Mac plugged in.
 
-## 11. Approve the mandate
+## 10. Approve the mandate
 
 Read `MANDATE.md`. Reply "mandate approved" (or your edits). Nothing goes
 live to strangers until you do.
