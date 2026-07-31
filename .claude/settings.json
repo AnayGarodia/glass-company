@@ -4,14 +4,12 @@
       "Bash(python3:*)",
       "Bash(git add:*)",
       "Bash(git commit:*)",
-      "Bash(git push:*)",
+      "Bash(git push origin:*)",
       "Bash(git status:*)",
       "Bash(git log:*)",
       "Bash(git diff:*)",
       "Bash(ls:*)",
-      "Bash(mkdir:*)",
-      "Bash(cat:*)",
-      "Bash(open:*)"
+      "Bash(mkdir:*)"
     ]
   }
 }
