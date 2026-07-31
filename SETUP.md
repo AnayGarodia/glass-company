@@ -1,4 +1,10 @@
-# Remaining setup (Anay, ~15 min of clicks)
+# Remaining setup (Anay, ~7 min)
+
+Update 2026-07-31: ✅ **Cloudflare done** — account verified, wrangler
+OAuth'd, site LIVE at https://glasscompany.pages.dev (deploys run
+headlessly from the ops loop). ✅ **Bluesky done** — glasscompany.bsky.social
+verified via API, disclosure bio set. Remaining: sections 3–6 below only.
+
 
 Claude already did, autonomously (2026-07-31):
 

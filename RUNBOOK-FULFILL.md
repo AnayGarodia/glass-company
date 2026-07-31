@@ -65,5 +65,8 @@ no new orders changes nothing but the dashboard timestamp.
    `.venv/bin/python3 -c "from ops.dashboard import build_site; build_site('data/ledger.jsonl','journal','site')"`.
 10. If anything notable happened, write `journal/YYYY-MM-DD-<slug>.md` —
     first line `# Title`, then honest plain prose. Public; write for readers.
-11. `git add -A && git commit -m "ops: fulfillment run" && git push` (push
-    only if a remote exists).
+11. `git add -A && git commit -m "ops: fulfillment run" && git push`, then
+    deploy the dashboard:
+    `npx wrangler pages deploy site --project-name glasscompany --branch main --commit-dirty=true`
+    (wrangler is OAuth'd on this machine; the site is
+    https://glasscompany.pages.dev).
