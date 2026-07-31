@@ -13,17 +13,20 @@ def _get(api_key, path):
 
 def fetch_intakes(api_key, form_id) -> list[dict]:
     data = _get(api_key, f"/forms/{form_id}/submissions")
+    titles = {q["id"]: q.get("title", q["id"]) for q in data.get("questions", [])}
     out = []
     for sub in data.get("submissions", []):
         fields = {}
         for resp in sub.get("responses", []):
-            title = (resp.get("question") or {}).get("title", "")
-            value = (resp.get("answer") or {}).get("value", "")
-            fields[title] = str(value)
-        raw = fields.get("Order number", "")
-        digits = "".join(c for c in raw if c.isdigit())
+            title = titles.get(resp.get("questionId"), resp.get("questionId", ""))
+            value = resp.get("answer")
+            if isinstance(value, dict):
+                value = value.get("value", "")
+            elif isinstance(value, list):
+                value = ", ".join(str(v) for v in value)
+            fields[title] = str(value if value is not None else "")
         out.append({
-            "order_number": int(digits) if digits else None,
+            "submission_id": sub.get("id", ""),
             "submitted_at": sub.get("submittedAt", ""),
             "fields": fields,
         })
