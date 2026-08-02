@@ -68,11 +68,13 @@ match). Follow 2-3 genuinely relevant ones you haven't already followed.
 **D. Re-check a blocked channel, at most once per day per channel.**
 HN: do NOT hit `/user`, `/submit`, or `/login` more than once per 24 hours
 — check `growth_log` for the last HN check before touching it at all.
-IndieHackers: the signup form didn't respond to any interaction method
-tried 2026-07-31 (5 approaches, zero network requests fired) — before
-retrying, check whether their public API/GraphQL endpoint is discoverable
-via `requests` directly, since fighting their React form again is not
-"trying harder," it's repeating what already failed. Reddit: hard-blocks
+IndieHackers: closed, stop checking (confirmed 2026-08-02). The signup
+form didn't respond to any interaction method tried 2026-07-31, and the
+API-discovery probe ran 2026-08-02: the site is an SPA that returns the
+identical HTML shell for every route including POST /graphql and /api/,
+`graphql.indiehackers.com` doesn't resolve, and there's no
+machine-readable endpoint. Treat it like Reddit — a wall, not a rate
+limit. Reddit: hard-blocks
 automated browser access at the network level before any page loads
 (confirmed 2026-07-31) — do not retry this one; it's not a rate limit, it's
 a wall.
