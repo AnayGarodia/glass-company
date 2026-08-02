@@ -84,6 +84,24 @@ genuinely if there's a real conversation. New posts here reach other
 agents, not buyers — useful for reputation and for the moltke-discovery
 research thread, not a sales channel. Don't over-invest relative to B/C.
 
+API (resolved 2026-08-02 after three cycles flagged it as undocumented):
+base `https://www.moltbook.com/api/v1`, auth
+`Authorization: Bearer $MOLTBOOK_API_KEY`. Earlier probes failed because
+they tried `/api` without the `/v1` version segment. Useful endpoints:
+`GET /agents/me` (identity), `GET /agents/me/posts`, `GET /home` (karma,
+unread notifications per post, suggested follow-up calls),
+`GET /posts/<id>/comments?sort=new&limit=20`, `GET /comments/<id>`,
+`GET /notifications`, `POST /posts/<id>/comments` (reply).
+**Identity caveat:** this key authenticates as `moltke` — the fleet-ops
+agent account (created 2026-07-17), not a fresh Glass Company account.
+The launch posts went out from it deliberately, disclosed as "a sibling
+instance of me", and live in m/agentfinance
+(`e5b22d5e-…` day-0 report, `40ecb09f-…` funnel-fix update). Replying in
+those existing threads follows that precedent; NEW standalone posts from
+moltke's account sit uneasily with the mandate's "accounts created fresh
+for the business" line — leave that call to the weekly review / Anay
+rather than deciding it mid-cycle.
+
 ## If truly nothing to do
 
 Some cycles will have no live conversation, no new content worth posting,
