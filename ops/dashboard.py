@@ -84,6 +84,7 @@ def build_site(ledger_path, journal_dir, out_dir) -> str:
         "products_html": _products_html(products),
         "price_usd": _dollars((products.get("products") or [{}])[0].get("price_cents", 1500)),
         "wallet_address": htmlmod.escape(wallet),
+        "support_url": htmlmod.escape(products.get("support_form_url") or "#"),
         "journal_html": _journal_html(Path(journal_dir)),
         "updated": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC"),
     })
