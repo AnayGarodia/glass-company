@@ -1,6 +1,15 @@
 """One-shot: create the four Tally forms via API and write ids/urls to products.json.
 
 Run: .venv/bin/python3 -m ops.create_forms
+
+STALE — do not re-run without reconciling against the live forms first.
+The live forms have been edited via the Tally API since this script last
+ran, so re-running it would silently revert those edits:
+- crossword (2026-08-06): the word list and the per-word explanation were
+  merged into one question ("one per line, as WORD - why it matters") and
+  the ask dropped from 10-15 words to "eight is enough, twelve is better".
+- support (2026-08-05): the transaction-signature field was made optional
+  so pre-purchase visitors can ask a question.
 """
 import json
 import os
