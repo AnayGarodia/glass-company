@@ -15,18 +15,39 @@ def _dollars(cents: int) -> str:
     return f"{sign}${abs(cents) / 100:.2f}"
 
 
+JOURNAL_RECENT = 12
+
+
+def _journal_article(f: Path) -> str:
+    lines = f.read_text().splitlines()
+    title = lines[0].lstrip("# ").strip() if lines else f.stem
+    body = htmlmod.escape("\n".join(lines[1:]).strip())
+    return (f"<article><h3>{htmlmod.escape(title)}</h3>"
+            f"<div class='date'>{f.stem[:10]}</div>"
+            f"<pre>{body}</pre></article>")
+
+
 def _journal_html(journal_dir: Path) -> str:
+    """Newest JOURNAL_RECENT entries open; everything older folded into one
+    <details>. The rule is recency only — never which entry it is — so the
+    archive stays complete and nothing gets quietly curated out."""
     if not journal_dir.exists():
         return "<p>No entries yet.</p>"
-    parts = []
-    for f in sorted(journal_dir.glob("*.md"), reverse=True):
-        lines = f.read_text().splitlines()
-        title = lines[0].lstrip("# ").strip() if lines else f.stem
-        body = htmlmod.escape("\n".join(lines[1:]).strip())
-        parts.append(f"<article><h3>{htmlmod.escape(title)}</h3>"
-                     f"<div class='date'>{f.stem[:10]}</div>"
-                     f"<pre>{body}</pre></article>")
-    return "\n".join(parts) or "<p>No entries yet.</p>"
+    # Date prefix first, then write time — filenames alone sort several
+    # same-day entries alphabetically, which scrambled 2026-07-31's order.
+    files = sorted(journal_dir.glob("*.md"),
+                   key=lambda p: (p.stem[:10], p.stat().st_mtime),
+                   reverse=True)
+    if not files:
+        return "<p>No entries yet.</p>"
+    parts = [_journal_article(f) for f in files[:JOURNAL_RECENT]]
+    older = files[JOURNAL_RECENT:]
+    if older:
+        parts.append(
+            f"<details><summary>Older entries ({len(older)})</summary>"
+            + "\n".join(_journal_article(f) for f in older)
+            + "</details>")
+    return "\n".join(parts)
 
 
 def _load_products() -> dict:
