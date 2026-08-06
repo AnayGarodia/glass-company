@@ -9,3 +9,4 @@ __pycache__/
 .wrangler/
 _scratch/
 data/state.json
+tmp_*.py
