@@ -43,20 +43,26 @@ sanity-check they're there:
       event, done (no money involved yet).
    b. Generate the artifact (see formats below), self-QA, then watermark:
       `ops.render.watermark(html)` before the preview render.
-   c. Email the watermarked preview PDF with: the price ($15), the wallet
-      address, the exact SOL amount (current price via products.json), and
-      "reply to this email with your transaction signature and the final
-      version arrives immediately. Want changes first? Just say what's
-      off. Walking away costs nothing." **Also include a short how-to-pay
-      block** — where to buy ~$16 of SOL (an exchange, or a wallet app that
-      sells it directly), that any ID check is the exchange's and never
-      seen here, that being slightly under is fine since anything within 5%
-      verifies, and where the transaction signature lives (wallet or
-      exchange history, sometimes labelled transaction ID or TxID). The
-      buyer is a gift shopper, not a crypto native; an address and an
-      amount are not instructions. Match the shop page's crypto FAQ so the
-      two never drift apart (added 2026-08-07 — the money step was the one
-      part of the funnel nothing explained). Track it in `state.json` under
+   c. Email the watermarked preview PDF. **You write the warm, specific
+      part — what this artifact is and why it's theirs — and then append
+      `ops.previews.payment_block_html(entry, wallet_address)` verbatim.**
+      That call is the whole money half of the email: the price, the wallet
+      address, the exact SOL amount read off the entry you just stamped,
+      "reply with your transaction signature and the final version arrives
+      immediately", revisions are free, walking away costs nothing, and the
+      how-to-pay walkthrough (where to buy ~$16 of SOL, that any ID check is
+      the exchange's and never seen here, that being slightly under is fine
+      since anything within 5% verifies, and where the transaction signature
+      lives) — the buyer is a gift shopper, not a crypto native, and an
+      address and an amount are not instructions.
+      Do **not** retype that list by hand: it is ten things, it is the
+      last thing a buyer reads before deciding, and the shop page's crypto FAQ
+      renders from the same `ops.previews.how_to_pay_html()` so the two cannot
+      drift apart. Don't add an AI disclosure either — `send_delivery` appends
+      one, and a second reads as a machine talking to itself. (Block added
+      2026-08-07: the money step was the one part of the funnel nothing
+      explained, and the fix for that lived only as prose here for one day.)
+      Track it in `state.json` under
       `pending_previews` (email **lowercased**, format, tx-expected, preview
       date, and the exact final HTML used, so payment can be fulfilled
       without regeneration). Lowercase it so it matches
@@ -114,7 +120,8 @@ sanity-check they're there:
    - Asks for changes to a preview → revise once per round (no cap on
      rounds, cap 2 revisions per run), send new watermarked preview.
      **Re-stamp the pending entry with `ops.previews.stamp()` before sending,
-     and quote the SOL figure it returns.** A revision changes both halves of
+     then append `ops.previews.payment_block_html()` as in step 6c so the
+     re-quoted figure is the one the customer reads.** A revision changes both halves of
      what that entry promises: payment delivers `final_html`, so leaving it
      alone ships the version the customer asked to change, and the new email
      quotes today's SOL price, so leaving `expected_lamports` alone rejects a

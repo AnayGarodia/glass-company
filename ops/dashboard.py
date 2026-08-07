@@ -4,7 +4,7 @@ import json
 from datetime import datetime, timezone
 from pathlib import Path
 
-from ops import ledger
+from ops import ledger, previews
 from ops.render import fill
 
 PRODUCTS_PATH = Path(__file__).resolve().parent.parent / "data" / "products.json"
@@ -106,6 +106,7 @@ def build_site(ledger_path, journal_dir, out_dir) -> str:
         "price_usd": _dollars((products.get("products") or [{}])[0].get("price_cents", 1500)),
         "wallet_address": htmlmod.escape(wallet),
         "support_url": htmlmod.escape(products.get("support_form_url") or "#"),
+        "how_to_pay_html": previews.how_to_pay_html(previews.PAGE),
         "journal_html": _journal_html(Path(journal_dir)),
         "updated": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC"),
     })
