@@ -95,16 +95,29 @@ sanity-check they're there:
    Expire `pending_previews` older than 14 days silently.
    **Also check Bluesky replies and mentions every run** — one call to
    `app.bsky.notification.listNotifications` (auth with `BLUESKY_HANDLE` /
-   `BLUESKY_PASSWORD`), look at anything with reason `reply`, `mention`, or
-   `quote` that is still unread. Answer it here, in the same spirit as an
-   inbound email: honestly, once, no pitch. Then
-   `app.bsky.notification.updateSeen`. This is inbound customer contact, not
-   prospecting, so it does **not** wait for the growth cycle's 4-hour gate.
+   `BLUESKY_PASSWORD`), and look at every notification with reason `reply`,
+   `mention`, or `quote`. **Decide what needs an answer by whether its `uri`
+   is in `state.json.handled_bsky_notification_uris`, NOT by `isRead`** —
+   `isRead` is derived from a single account-wide `seenAt` watermark that
+   `updateSeen` advances for every notification at once, whether or not a
+   reply actually went out, so a run that marks seen and then stops leaves
+   real questions looking answered forever. That is the same five-day rot
+   this step was written to stop, one layer down. Before replying to an
+   unhandled one, fetch its thread (`app.bsky.feed.getPostThread`) and
+   confirm no reply from this account is already there — the list can lag
+   reality, since a run may reply and end before recording it (this happened
+   at 02:13 on 08-07). Answer in the same spirit as an inbound email:
+   honestly, once, no pitch. Then add the `uri` to
+   `handled_bsky_notification_uris` and call
+   `app.bsky.notification.updateSeen` as hygiene only. This is inbound
+   customer contact, not prospecting, so it does **not** wait for the growth
+   cycle's 4-hour gate.
    (Added 2026-08-06 after a real miss: a person replied on 08-01 asking
    "do you respond to comments here?" and mentioned the account again on
    08-02, and no run saw either for five days. Every cycle read the email
    inbox and Moltbook notifications; nothing ever read Bluesky's. It was the
-   only genuine engagement the business had received.)
+   only genuine engagement the business had received. Hardened 2026-08-07 to
+   stop trusting `isRead` — see above.)
 8. Poll the support form (`support_form_id`). Refund requests → verify the
    tx_sig was a real sale, then `send_sol` back to the paying address +
    `refund` event + confirmation email. Anything else → answer honestly by
