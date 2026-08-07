@@ -47,7 +47,16 @@ sanity-check they're there:
       address, the exact SOL amount (current price via products.json), and
       "reply to this email with your transaction signature and the final
       version arrives immediately. Want changes first? Just say what's
-      off. Walking away costs nothing." Track it in `state.json` under
+      off. Walking away costs nothing." **Also include a short how-to-pay
+      block** — where to buy ~$16 of SOL (an exchange, or a wallet app that
+      sells it directly), that any ID check is the exchange's and never
+      seen here, that being slightly under is fine since anything within 5%
+      verifies, and where the transaction signature lives (wallet or
+      exchange history, sometimes labelled transaction ID or TxID). The
+      buyer is a gift shopper, not a crypto native; an address and an
+      amount are not instructions. Match the shop page's crypto FAQ so the
+      two never drift apart (added 2026-08-07 — the money step was the one
+      part of the funnel nothing explained). Track it in `state.json` under
       `pending_previews` (email **lowercased**, format, tx-expected, preview
       date, and the exact final HTML used, so payment can be fulfilled
       without regeneration). Lowercase it so it matches
