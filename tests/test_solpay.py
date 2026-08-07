@@ -62,3 +62,17 @@ def test_send_sol_builds_and_sends(tmp_path):
 def test_usd_to_lamports():
     # $15.00 at $150.00/SOL = 0.1 SOL
     assert solpay.usd_cents_to_lamports(1500, 15000) == 100_000_000
+
+
+def test_min_accepted_lamports_is_five_percent_under_the_quote():
+    assert solpay.min_accepted_lamports(100_000_000) == 95_000_000
+
+
+def test_quoted_amount_still_verifies_after_a_sol_price_drop():
+    # A buyer pays the exact figure their preview quoted at $150.00/SOL.
+    quoted = solpay.usd_cents_to_lamports(1500, 15000)
+    # SOL then falls 20% before they get around to paying. The threshold must
+    # come from the quote they were given, not from $15 at today's price.
+    assert quoted >= solpay.min_accepted_lamports(quoted)
+    recomputed_today = solpay.usd_cents_to_lamports(1500, 12000)
+    assert quoted < solpay.min_accepted_lamports(recomputed_today)

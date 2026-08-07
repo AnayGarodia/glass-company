@@ -98,3 +98,17 @@ def sol_price_usd_cents() -> int:
 
 def usd_cents_to_lamports(usd_cents: int, sol_price_usd_cents: int) -> int:
     return round(usd_cents * LAMPORTS_PER_SOL / sol_price_usd_cents)
+
+
+PAYMENT_TOLERANCE = 0.05
+
+
+def min_accepted_lamports(quoted_lamports: int) -> int:
+    """Smallest payment that counts as paid against a quoted amount.
+
+    `quoted_lamports` must be the figure the preview email actually quoted
+    (`pending_previews[].expected_lamports`), not an amount recomputed at
+    today's SOL price. The quote is the promise; the shop page and the
+    preview email both say anything within 5% of it counts as paid.
+    """
+    return int(quoted_lamports * (1 - PAYMENT_TOLERANCE))

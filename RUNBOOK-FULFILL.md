@@ -90,7 +90,16 @@ sanity-check they're there:
    silently broken every real payment).
    - Contains a plausible tx signature and matches a `pending_previews`
      entry by sender email → `ops.solpay.verify_payment(sig, wallet,
-     required_lamports × 0.95)`; reject sigs already in
+     ops.solpay.min_accepted_lamports(entry["expected_lamports"]))`.
+     **The threshold comes from the `expected_lamports` stored on that
+     pending entry — the exact figure the preview email quoted — never from
+     a lamport amount recomputed at today's SOL price.** The quoted number
+     is the promise, and the page and the email both say anything within 5%
+     of it counts as paid; recomputing means a customer who pays exactly
+     what they were told gets rejected whenever SOL fell more than 5%
+     between the preview and the payment, which is one bad week inside the
+     14-day preview window (found 2026-08-07, before it ever fired). Reject
+     sigs already in
      `fulfilled_tx_sigs`. Verified → record `sale` (`order_id` = sig,
      `amount_cents` from lamports at current price, plus `lamports`),
      re-render the stored HTML WITHOUT watermark, deliver final via
