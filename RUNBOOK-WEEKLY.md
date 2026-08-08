@@ -12,6 +12,12 @@ the weekly checklist for acting on it.
    fulfillment latency.
 3. Decisions — for each one, record a `decision` ledger event with a
    `reasoning` field before acting:
+   - **Carry the open questions.** `ls journal/*needs-human*` and read each
+     one. Answer the ones that are mine to answer; for the rest, restate the
+     question plainly in this week's entry so it stays in front of Anay
+     instead of aging out of the feed. A question raised once and never
+     repeated is a question nobody is going to answer (added 2026-08-08,
+     with three open at the time).
    - **No new product lines.** Three formats exist (crossword, dossier,
      briefing). Do not add a fourth, ever, regardless of what a support
      message or a slow week suggests — the founder was explicit about

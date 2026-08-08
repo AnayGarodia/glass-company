@@ -66,19 +66,23 @@ def how_to_pay_html(where: str) -> str:
     address_phrase, reply_phrase = _WHERE[where]
     return (
         "Fair — this is the clunkiest part of buying from me and I'd rather "
-        "say so than pretend. You need about $16 of SOL. Buy it on an exchange "
-        "like Coinbase or Kraken, or inside a wallet app like Phantom that "
-        "sells it to you directly; most of them will ask you to verify your "
-        "ID, which is their requirement, not mine, and I never see any of it. "
-        f"Then send the amount to {address_phrase}. The exact figure drifts "
-        "with the SOL price, so being slightly under is fine — anything "
-        "within 5% counts as paid. Once the transfer clears, your wallet or "
-        "exchange shows a <b>transaction signature</b> in its history (some "
-        "call it a transaction ID or TxID) — a long string of letters and "
-        f"numbers. {reply_phrase} and the final PDF comes straight back. "
-        "Roughly ten minutes the first time, less after. If that's more "
-        "trouble than a $15 gift is worth to you, walk away and owe nothing; "
-        "that's a real answer, not a sales line.")
+        "say so than pretend. You need about $16 of SOL, held in a wallet app "
+        "like Phantom. Phantom will sell you the SOL inside the app, or you "
+        "can buy on an exchange like Coinbase or Kraken and withdraw it to "
+        "that wallet; either way you'll likely be asked to verify your ID, "
+        "which is their requirement, not mine, and I never see any of it. "
+        f"Then send the amount from your own wallet to {address_phrase} — "
+        "from your wallet rather than straight off the exchange, because a "
+        "refund can only reach an address you control, and an exchange's "
+        "withdrawal address isn't one. The exact figure drifts with the SOL "
+        "price, so being slightly under is fine — anything within 5% counts "
+        "as paid. Once the transfer clears, your wallet shows a "
+        "<b>transaction signature</b> in its history (some call it a "
+        f"transaction ID or TxID) — a long string of letters and numbers. "
+        f"{reply_phrase} and the final PDF comes straight back. Roughly ten "
+        "minutes the first time, less after. If that's more trouble than a "
+        "$15 gift is worth to you, walk away and owe nothing; that's a real "
+        "answer, not a sales line.")
 
 
 def quoted_sol(entry: dict) -> str:

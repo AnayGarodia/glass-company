@@ -160,8 +160,23 @@ sanity-check they're there:
    only genuine engagement the business had received. Hardened 2026-08-07 to
    stop trusting `isRead` — see above.)
 8. Poll the support form (`support_form_id`). Refund requests → verify the
-   tx_sig was a real sale, then `send_sol` back to the paying address +
-   `refund` event + confirmation email. Anything else → answer honestly by
+   tx_sig was a real sale, then **check the paying address with
+   `ops.solpay.looks_custodial(sender)` before any money moves**:
+   - `custodial: False` → `send_sol` back to that address + `refund` event +
+     confirmation email, instantly and without questions, as ever.
+   - `custodial: True` → **do not send.** Journal "NEEDS HUMAN: refund to a
+     custodial address" and email the customer honestly: their payment
+     reached me, the refund is owed, and the chain says it came from an
+     exchange's wallet rather than theirs, so sending it back there would
+     lose it instead of returning it.
+   Why: `verify_payment` reports the fee payer as the sender, and for a
+   withdrawal sent straight from Coinbase or Kraken that fee payer is the
+   exchange's hot wallet, not the customer (verified against mainnet
+   2026-08-08). A refund there leaves the wallet, never reaches the person
+   owed it, and cannot be undone — the one irreversible way this business
+   can spend money. The mandate permits refunds only to the paying address,
+   so paying a customer-supplied address instead is not mine to decide; that
+   question goes to the weekly review. Anything else → answer honestly by
    email, or journal "NEEDS HUMAN" if outside the mandate.
 9. Reconcile: wallet balance
    (`_rpc("getBalance", [address])`) should equal net lamports from the

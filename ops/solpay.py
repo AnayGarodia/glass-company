@@ -72,6 +72,49 @@ def verify_payment(tx_sig: str, address: str, min_lamports: int, rpc=RPC) -> dic
     return {"ok": True, "lamports": received, "sender": sender, "reason": "ok"}
 
 
+CUSTODIAL_BALANCE_LAMPORTS = 100 * LAMPORTS_PER_SOL
+CUSTODIAL_BURST = 100
+CUSTODIAL_BURST_SECONDS = 3600
+
+
+def looks_custodial(address: str, rpc=RPC) -> dict:
+    """Is `address` plausibly an exchange's wallet rather than a buyer's own?
+
+    `verify_payment` reports the fee payer as the sender, and a refund goes
+    back to it. When a buyer withdraws SOL straight from Coinbase to us, that
+    fee payer is Coinbase's hot wallet: a refund sent there leaves the wallet,
+    never reaches the customer, and cannot be undone. Verified against mainnet
+    2026-08-08 — real withdrawals from a known exchange hot wallet do carry the
+    exchange as fee payer.
+
+    Best-effort by construction. Two signals, either one enough: a balance no
+    gift buyer would hold, and a burst of transactions no individual produces.
+    A service routing withdrawals through fresh, near-empty intermediate
+    addresses would pass this; the how-to-pay copy asking buyers to send from
+    their own wallet is what actually shrinks the exposure. False positives are
+    cheap (one email asking the customer to confirm), a false negative is money
+    gone, so this errs toward flagging.
+
+    Returns {"custodial": bool, "balance": int, "reason": str}.
+    """
+    balance = _rpc("getBalance", [address], rpc=rpc)["value"]
+    if balance >= CUSTODIAL_BALANCE_LAMPORTS:
+        return {"custodial": True, "balance": balance,
+                "reason": f"holds {balance / LAMPORTS_PER_SOL:,.0f} SOL, far "
+                          "more than someone who bought $16 of it to pay me"}
+    sigs = _rpc("getSignaturesForAddress",
+                [address, {"limit": CUSTODIAL_BURST}], rpc=rpc)
+    times = sorted(s["blockTime"] for s in sigs if s.get("blockTime"))
+    if len(sigs) >= CUSTODIAL_BURST and len(times) >= 2:
+        span = times[-1] - times[0]
+        if span <= CUSTODIAL_BURST_SECONDS:
+            return {"custodial": True, "balance": balance,
+                    "reason": f"{len(sigs)} transactions in {span}s — the "
+                              "traffic of a service, not a person"}
+    return {"custodial": False, "balance": balance,
+            "reason": "looks like an individual's own wallet"}
+
+
 def send_sol(wallet: Keypair, to_address: str, lamports: int, rpc=RPC) -> str:
     """Send lamports (refunds). Returns the transaction signature."""
     blockhash = Hash.from_string(

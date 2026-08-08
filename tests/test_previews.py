@@ -103,7 +103,12 @@ def test_page_and_email_give_the_same_how_to_pay_answer():
     email = previews.how_to_pay_html(previews.EMAIL)
     for phrase in ("$16 of SOL", "Coinbase or Kraken", "verify your ID",
                    "within 5% counts as paid", "transaction signature",
-                   "TxID", "$15 gift is worth", "ten minutes the first time"):
+                   "TxID", "$15 gift is worth", "ten minutes the first time",
+                   # A refund goes back to whoever the chain says paid. Both
+                   # copies must ask for payment from a wallet the buyer owns,
+                   # or a refund lands in an exchange's hot wallet instead.
+                   "from your own wallet", "a refund can only reach an "
+                   "address you control"):
         assert phrase in page and phrase in email
     # Only the two context-dependent phrases differ.
     assert "the address in your preview email" in page
