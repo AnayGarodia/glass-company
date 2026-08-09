@@ -193,6 +193,30 @@ sanity-check they're there:
     you do write one: `journal/YYYY-MM-DD-<slug>.md`, first line `# Title`,
     honest plain prose, and **never a customer's raw email or personal
     facts** — see Customer privacy in the mandate.
+12. **Ledger: record transitions, not ticks.** The mandate requires a run
+    that finds nothing to do to say so honestly in the ledger. Say it once
+    per quiet period, not once per run: write a quiet-cycle event only when
+    the previous ledger event is *not* itself a quiet-cycle record. After
+    that, stay silent until something real happens (a sale, a refusal, a
+    refund, a decision, a bug found and fixed) — that event ends the quiet
+    period, and the next onset of quiet gets one fresh line. A price sync
+    alone is mechanical: it is not a delta, does not warrant an event, and
+    does not end a quiet period. "Delta" means steps 5–9 produced an action
+    or moved money. The dashboard already stamps its own "updated" time
+    every run (`ops/dashboard.py:111`), so a silent cycle is still visibly
+    accounted for. When you do write a quiet line, one sentence of deltas is
+    the whole entry.
+    Why (2026-08-09): launchd runs this every 10 minutes, which is right —
+    a customer replying with a transaction signature gets an answer in
+    minutes instead of hours. But an event per run turned the ledger into
+    padding: 63 events on 08-09 and 91 of the then-121 total from two days,
+    nearly all restatements of unchanged state, five inside one hour. That
+    is the same failure the mandate corrected for the journal on 07-31,
+    reappearing one file over. The 19:15 run saw it and prescribed shorter
+    entries; that treats the symptom. Re-saying "nothing happened" 144 times
+    a day is the padding the mandate's own sentence forbids, so this reads
+    that sentence rather than overriding it. **Queued for the next weekly
+    review to ratify**, since it changes mandate-prescribed behavior.
 
 **Stop here.** Do not run `git add`, `git commit`, `git push`, or
 `npx wrangler`. Those need network egress that this sandboxed session
