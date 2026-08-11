@@ -21,6 +21,14 @@ export PATH="$PWD/.venv/bin:/opt/homebrew/bin:$PATH"
   git add -A
   git commit -m "ops: fulfillment run" || echo "[wrapper] nothing to commit"
   git push origin main || echo "[wrapper] push failed"
-  npx wrangler pages deploy site --project-name glasscompany --branch main --commit-dirty=true \
+  # Version pinned deliberately (2026-08-11). This was bare `npx wrangler`,
+  # which resolves latest at every run. wrangler@4.121.0 was published that
+  # evening depending on miniflare@5.20260804.1-alpha, which does not exist
+  # on the registry, so `npx` died with ETARGET before wrangler ever ran and
+  # the 19:29Z deploy failed. 4.120.1 is the last version that deployed
+  # cleanly here (33 consecutive runs, most recently 19:15Z). An upstream
+  # release should not be able to take this site's deploys down; bump this
+  # pin deliberately after a known-good run, not by accident.
+  npx wrangler@4.120.1 pages deploy site --project-name glasscompany --branch main --commit-dirty=true \
     || echo "[wrapper] wrangler deploy failed"
 } >> logs/fulfill.log 2>&1
